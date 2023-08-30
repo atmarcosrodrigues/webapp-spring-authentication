@@ -1,0 +1,70 @@
+logging:
+  level:
+    webapp:
+      spring:
+        auth:
+          backend: TRACE
+    org:
+      hibernate: ERROR
+      springframework:
+        web: ERROR
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /api
+server:
+  error:
+    include-stacktrace: never
+  port: 8081
+  uri-url: 'http://localhost'
+springdoc:
+  packagesToScan: webapp.spring.auth.backend
+  show-actuator: true
+  swagger-ui:
+    disable-swagger-default-url: true
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    tagsSorter: alpha
+    path: /index.html
+    use-root-path: true
+  show-login-endpoint: true
+web:
+  cors:
+    allowed-origins: [
+      'http://localhost:3000',
+      'http://localhost:8080',
+      'http://localhost:8081',
+      'http://localhost:8082'
+    ]
+    allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
+    max-age: 3600
+    allowed-headers: [ 'Requestor-Type', 'auth', 'content-type', 'x-auth-token', 'authorization' ]
+    exposed-headers: [ 'X-Get-Header', 'x-auth-token' ]
+  app:
+    admin-customer:
+      code: 0
+    tokenType: Bearer
+    jwtSecret: fB4#A9Cx7goL
+    jwtExpirationMs: 86400000
+spring:
+  profiles:
+    active: default
+  sql.init.mode: always
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: wqO8@3x2UnQR46V#
+    platform: org.hibernate.dialect.PostgreSQLDialect
+    schema: WebappDB
+    url: jdbc:postgresql://localhost:5432/WebappDB
+    username: WebappUser
+  jpa:
+    defer-datasource-initialization: true
+    database: postgresql
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true

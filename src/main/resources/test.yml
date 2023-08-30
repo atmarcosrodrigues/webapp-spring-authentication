@@ -1,0 +1,15 @@
+spring:
+    profiles:
+        active: test
+    datasource:
+        driver-class-name: org.h2.Driver
+        password: ''
+        platform: org.hibernate.dialect.H2Dialect
+        url: jdbc:h2:mem:WebappDB;MODE=PostgreSQL
+        username: sa
+    jpa:
+        generate-ddl: false
+        hibernate:
+            ddl-auto: create-drop
+            dialect: org.hibernate.dialect.H2Dialect
+        show-sql: false
