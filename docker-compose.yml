@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  postgresql:
+    container_name: postgres
+    build: ./database
+    restart: always
+    environment:
+      - POSTGRES_USER=WebappUser
+      - POSTGRES_PASSWORD=wqO8@3x2UnQR46V#
+      - POSTGRES_DB=WebappDB
+    ports:
+      - "5432:5432"
+    networks:
+      - common-network
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=dev.webapp@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=Ff@43e382c*P6#Hc
+    depends_on:
+      - postgresql
+    ports:
+      - "15433:80"
+
+  backend:
+    container_name: webapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/WebappDB
+      - SPRING_DATASOURCE_USERNAME=WebappUser
+      - SPRING_DATASOURCE_PASSWORD=wqO8@3x2UnQR46V#
+      - SPRING_DATASOURCE_SCHEMA=WebappDB
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_GENERATE_DDL=true
+      - SPRING_JPA_SHOW_SQL=true
+      - SERVER_PORT=8080
+    depends_on:
+      - postgresql
+    ports:
+      - 8080:8080
+    networks:
+      - common-network
+
+networks:
+  common-network:
+    driver: bridge
